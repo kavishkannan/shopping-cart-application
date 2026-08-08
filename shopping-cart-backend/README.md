@@ -165,8 +165,6 @@ Product information includes:
 - Image URL
 - Cart status
 
-The image is currently represented using an S3 image URL.
-
 ---
 
 # Product Search

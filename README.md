@@ -52,7 +52,6 @@ The application provides the following features:
 - Search debounce
 - Product creation
 - Product editing
-- S3 image URL support
 - Add to cart
 - Remove from cart
 - Cart summary
@@ -268,8 +267,6 @@ Each product can display:
 - Price
 - Stock
 - Cart status
-
-The product image is represented using an S3 image URL.
 
 The product page supports:
 
@@ -799,7 +796,6 @@ API Request
 
 - Docker
 - Docker Desktop
-- Amazon S3 image URLs
 
 ---
 

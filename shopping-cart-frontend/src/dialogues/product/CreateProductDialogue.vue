@@ -132,7 +132,7 @@
           </div>
 
           <div class="FormNote">
-            Product images are stored in S3. Enter the S3 image URL here.
+            Enter the image URL here.
           </div>
         </v-form>
       </v-card-text>
