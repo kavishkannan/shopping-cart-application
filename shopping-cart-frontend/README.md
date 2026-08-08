@@ -1,4 +1,3 @@
-````markdown
 # Shopping Cart - Frontend
 
 The frontend application for the Shopping Cart project, built using **Vue 3, TypeScript, Vuetify, Pinia, Vue Router, and Vite**.
@@ -194,7 +193,7 @@ Dashboard
 Products
 My Cart
 My Orders
-````
+```
 
 ### Administrator Navigation
 
@@ -212,22 +211,22 @@ The navigation automatically adapts based on the user's role.
 
 The frontend is designed to work across:
 
-* Desktop
-* Laptop
-* Tablet
-* Mobile
+- Desktop
+- Laptop
+- Tablet
+- Mobile
 
 Responsive behavior is implemented for:
 
-* Application header
-* Navigation drawer
-* Dashboard
-* Product cards
-* Product dialogs
-* Cart
-* Order pages
-* Search controls
-* Pagination
+- Application header
+- Navigation drawer
+- Dashboard
+- Product cards
+- Product dialogs
+- Cart
+- Order pages
+- Search controls
+- Pagination
 
 On smaller screens, the navigation drawer changes to a mobile-friendly menu.
 
@@ -288,10 +287,10 @@ Reusable UI and page functionality are implemented inside components.
 
 `store.ts` contains global application state such as:
 
-* User information
-* User role
-* JWT token
-* Authentication state
+- User information
+- User role
+- JWT token
+- Authentication state
 
 ---
 
@@ -320,10 +319,10 @@ Pinia is used to maintain global authentication-related state.
 
 The global store contains information required across the application, including:
 
-* Logged-in user
-* User role
-* JWT token
-* Authentication status
+- Logged-in user
+- User role
+- JWT token
+- Authentication status
 
 Feature-specific data remains within the relevant components.
 
@@ -438,29 +437,26 @@ The Shopping Cart frontend provides a complete responsive UI for the application
 
 The major frontend functionality includes:
 
-* Vue 3 + TypeScript
-* Vuetify UI
-* Customer and Admin interfaces
-* Login and Registration
-* Protected routes
-* Responsive Main Layout
-* Product listing
-* Product search
-* API pagination
-* Search debounce
-* Admin product creation
-* Admin product editing
-* Shopping cart
-* Cart summary
-* Order placement
-* Customer orders
-* Admin orders
-* Loading, error, and empty states
-* Centralized API service
-* Global authentication state
-* Docker support
+- Vue 3 + TypeScript
+- Vuetify UI
+- Customer and Admin interfaces
+- Login and Registration
+- Protected routes
+- Responsive Main Layout
+- Product listing
+- Product search
+- API pagination
+- Search debounce
+- Admin product creation
+- Admin product editing
+- Shopping cart
+- Cart summary
+- Order placement
+- Customer orders
+- Admin orders
+- Loading, error, and empty states
+- Centralized API service
+- Global authentication state
+- Docker support
 
 For the complete application architecture, backend flow, database, API flow, authentication design, and end-to-end assessment workflow, refer to the root project `README.md`.
-
-```
-```

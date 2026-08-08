@@ -1,4 +1,3 @@
-````markdown
 # Shopping Cart - Backend
 
 Backend REST API for the Shopping Cart application, built using **Node.js, Express.js, TypeScript, and MySQL**.
@@ -65,7 +64,7 @@ src/
 ├── constants/
 │
 └── ...
-````
+```
 
 ### Routes
 
@@ -87,9 +86,9 @@ Handles MySQL queries and database operations.
 
 Handles common request processing such as:
 
-* JWT authentication
-* Authorization
-* Request processing
+- JWT authentication
+- Authorization
+- Request processing
 
 ---
 
@@ -137,15 +136,15 @@ Customer and administrator APIs are protected based on the authenticated user's 
 
 Administrator-only operations include:
 
-* Create product
-* Edit product
-* View all customer orders
+- Create product
+- Edit product
+- View all customer orders
 
 Customer operations include:
 
-* Cart management
-* Place order
-* View own orders
+- Cart management
+- Place order
+- View own orders
 
 Authorization is enforced at the backend level rather than relying only on frontend visibility.
 
@@ -157,14 +156,14 @@ The backend provides APIs for product management.
 
 Product information includes:
 
-* Product ID
-* Product name
-* Description
-* Category
-* Price
-* Stock
-* Image URL
-* Cart status
+- Product ID
+- Product name
+- Description
+- Category
+- Price
+- Stock
+- Image URL
+- Cart status
 
 The image is currently represented using an S3 image URL.
 
@@ -184,9 +183,9 @@ The backend receives the search value and performs the corresponding database qu
 
 Search can be performed against relevant product information such as:
 
-* Product name
-* Description
-* Category
+- Product name
+- Description
+- Category
 
 ---
 
@@ -292,9 +291,9 @@ The backend provides APIs for managing customer carts.
 
 Major cart operations include:
 
-* Add product to cart
-* Remove product from cart
-* Retrieve cart items
+- Add product to cart
+- Remove product from cart
+- Retrieve cart items
 
 Cart operations are associated with the authenticated user.
 
@@ -306,12 +305,12 @@ The backend identifies the current user using the authenticated JWT information.
 
 Cart information includes:
 
-* Product
-* Product image
-* Product name
-* Unit price
-* Quantity
-* Total price
+- Product
+- Product image
+- Product name
+- Unit price
+- Quantity
+- Total price
 
 The backend provides the required data for the frontend Cart page and cart summary.
 
@@ -333,15 +332,15 @@ The backend provides APIs for order management.
 
 Customers can:
 
-* Place orders
-* View their own orders
+- Place orders
+- View their own orders
 
 Administrators can:
 
-* View all customer orders
-* View customer information
-* View ordered products
-* View order amounts
+- View all customer orders
+- View customer information
+- View ordered products
+- View order amounts
 
 ---
 
@@ -355,12 +354,12 @@ This prevents a customer from accessing another customer's order information.
 
 Customer order information includes:
 
-* Order details
-* Product information
-* Quantity
-* Price
-* Total amount
-* Order date
+- Order details
+- Product information
+- Quantity
+- Price
+- Total amount
+- Order date
 
 ---
 
@@ -370,12 +369,12 @@ Administrator order APIs provide access to all customer orders.
 
 The response can contain:
 
-* Customer information
-* Product information
-* Quantity
-* Unit price
-* Total price
-* Order information
+- Customer information
+- Product information
+- Quantity
+- Unit price
+- Total price
+- Order information
 
 Access is restricted to administrators through backend authorization.
 
@@ -385,9 +384,9 @@ Access is restricted to administrators through backend authorization.
 
 Order listing APIs support:
 
-* Search
-* Pagination
-* Page size
+- Search
+- Pagination
+- Page size
 
 The frontend sends the search and pagination values to the backend.
 
@@ -407,12 +406,12 @@ The backend uses **MySQL** as the primary database.
 
 The database stores application information such as:
 
-* Users
-* Products
-* Carts
-* Cart items
-* Orders
-* Order items
+- Users
+- Products
+- Carts
+- Cart items
+- Orders
+- Order items
 
 Database communication is handled through the repository layer.
 
@@ -424,13 +423,13 @@ Database queries are kept inside repositories.
 
 The repository layer is responsible for:
 
-* Executing MySQL queries
-* Reading database records
-* Creating records
-* Updating records
-* Removing cart records
-* Retrieving paginated data
-* Retrieving filtered data
+- Executing MySQL queries
+- Reading database records
+- Creating records
+- Updating records
+- Removing cart records
+- Retrieving paginated data
+- Retrieving filtered data
 
 The service layer communicates with repositories instead of directly handling database queries.
 
@@ -442,11 +441,11 @@ The service layer contains the main application logic.
 
 Examples include:
 
-* Authentication processing
-* Product operations
-* Cart operations
-* Order operations
-* Validation and business rules
+- Authentication processing
+- Product operations
+- Cart operations
+- Order operations
+- Validation and business rules
 
 The general flow is:
 
@@ -650,30 +649,30 @@ All application data is accessed through the backend REST APIs.
 
 The major backend implementation includes:
 
-* Node.js
-* Express.js
-* TypeScript
-* REST APIs
-* JWT authentication
-* Role-based authorization
-* MySQL integration
-* Layered architecture
-* Controller layer
-* Service layer
-* Repository layer
-* Product management
-* API-level product search
-* API-level product pagination
-* Cart management
-* Add to Cart
-* Remove from Cart
-* Cart status in product response
-* Order placement
-* Customer order management
-* Administrator order management
-* API-level order search
-* API-level order pagination
-* Docker support
+- Node.js
+- Express.js
+- TypeScript
+- REST APIs
+- JWT authentication
+- Role-based authorization
+- MySQL integration
+- Layered architecture
+- Controller layer
+- Service layer
+- Repository layer
+- Product management
+- API-level product search
+- API-level product pagination
+- Cart management
+- Add to Cart
+- Remove from Cart
+- Cart status in product response
+- Order placement
+- Customer order management
+- Administrator order management
+- API-level order search
+- API-level order pagination
+- Docker support
 
 ---
 
@@ -692,6 +691,3 @@ shopping-cart-frontend
 application through REST APIs.
 
 For the complete end-to-end architecture, application flow, and assessment overview, refer to the root project's `README.md`.
-
-```
-```

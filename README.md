@@ -1,4 +1,3 @@
-````markdown
 # Shopping Cart Application
 
 A full-stack Shopping Cart application developed as an assessment project using Vue 3, TypeScript, Vuetify, Node.js, Express.js, and MySQL.
@@ -31,7 +30,7 @@ The backend handles authentication, authorization, business logic, database oper
                                                    |
                                                    v
                                                MySQL
-````
+```
 
 ---
 
@@ -39,32 +38,32 @@ The backend handles authentication, authorization, business logic, database oper
 
 The application provides the following features:
 
-* User registration
-* User login
-* JWT authentication
-* Protected routes
-* Role-based authorization
-* Customer workflow
-* Administrator workflow
-* Dashboard
-* Product listing
-* Product search
-* API-level pagination
-* Search debounce
-* Product creation
-* Product editing
-* S3 image URL support
-* Add to cart
-* Remove from cart
-* Cart summary
-* Order placement
-* Customer order history
-* Administrator order management
-* Loading states
-* Error states
-* Empty states
-* Responsive UI
-* Docker support
+- User registration
+- User login
+- JWT authentication
+- Protected routes
+- Role-based authorization
+- Customer workflow
+- Administrator workflow
+- Dashboard
+- Product listing
+- Product search
+- API-level pagination
+- Search debounce
+- Product creation
+- Product editing
+- S3 image URL support
+- Add to cart
+- Remove from cart
+- Cart summary
+- Order placement
+- Customer order history
+- Administrator order management
+- Loading states
+- Error states
+- Empty states
+- Responsive UI
+- Docker support
 
 ---
 
@@ -76,32 +75,32 @@ The application supports two user roles.
 
 Customers can:
 
-* Register
-* Login
-* Access the dashboard
-* View products
-* Search products
-* Navigate through paginated products
-* Add products to cart
-* Remove products from cart
-* View their cart
-* Review cart summary
-* Place orders
-* View their own orders
+- Register
+- Login
+- Access the dashboard
+- View products
+- Search products
+- Navigate through paginated products
+- Add products to cart
+- Remove products from cart
+- View their cart
+- Review cart summary
+- Place orders
+- View their own orders
 
 ## Administrator
 
 Administrators can:
 
-* Login
-* Access the dashboard
-* View products
-* Search products
-* Navigate through paginated products
-* Create products
-* Edit products
-* View all customer orders
-* View customer and order information
+- Login
+- Access the dashboard
+- View products
+- Search products
+- Navigate through paginated products
+- Create products
+- Edit products
+- View all customer orders
+- View customer and order information
 
 Administrator-only functionality is protected at both the frontend and backend levels.
 
@@ -242,15 +241,15 @@ The application separates customer and administrator functionality.
 
 Examples of administrator-only functionality:
 
-* Create product
-* Edit product
-* View all orders
+- Create product
+- Edit product
+- View all orders
 
 Customer-specific functionality includes:
 
-* Cart
-* Place order
-* View own orders
+- Cart
+- Place order
+- View own orders
 
 Role validation is handled on the backend for API security, while the frontend uses the role to display the appropriate UI options.
 
@@ -262,24 +261,24 @@ The product page provides product browsing functionality for authenticated users
 
 Each product can display:
 
-* Product image
-* Product name
-* Description
-* Category
-* Price
-* Stock
-* Cart status
+- Product image
+- Product name
+- Description
+- Category
+- Price
+- Stock
+- Cart status
 
 The product image is represented using an S3 image URL.
 
 The product page supports:
 
-* Search
-* Pagination
-* Loading state
-* Error state
-* Empty state
-* Responsive product cards
+- Search
+- Pagination
+- Loading state
+- Error state
+- Empty state
+- Responsive product cards
 
 ---
 
@@ -387,12 +386,12 @@ Administrators can create and edit products.
 
 The product form supports:
 
-* Product name
-* Description
-* Category
-* Price
-* Stock
-* Image URL
+- Product name
+- Description
+- Category
+- Price
+- Stock
+- Image URL
 
 The product creation and editing functionality uses a reusable product dialog.
 
@@ -519,9 +518,9 @@ Customers can view their own orders.
 
 The customer order page displays relevant information such as:
 
-* Order details
-* Ordered products
-* Order amount
+- Order details
+- Ordered products
+- Order amount
 
 Customers can only access their own order information.
 
@@ -533,10 +532,10 @@ Administrators can view all customer orders.
 
 The administrator order page provides information such as:
 
-* Customer information
-* Ordered products
-* Order details
-* Order amount
+- Customer information
+- Ordered products
+- Order details
+- Order amount
 
 The orders module uses the authenticated user's role to determine which order view is displayed.
 
@@ -625,19 +624,19 @@ Defines API endpoints and applies required middleware.
 
 Handles common request processing such as:
 
-* JWT authentication
-* Authorization
-* Request validation where required
+- JWT authentication
+- Authorization
+- Request validation where required
 
 ### Controllers
 
 Responsible for:
 
-* Reading HTTP requests
-* Reading request parameters
-* Reading request bodies
-* Calling services
-* Returning HTTP responses
+- Reading HTTP requests
+- Reading request parameters
+- Reading request bodies
+- Calling services
+- Returning HTTP responses
 
 ### Services
 
@@ -711,10 +710,10 @@ A single global store is used for application-wide information.
 
 The store contains information such as:
 
-* Current user
-* User role
-* JWT token
-* Authentication state
+- Current user
+- User role
+- JWT token
+- Authentication state
 
 Feature-specific data such as products, cart items, and orders is maintained within the respective components rather than being stored unnecessarily in the global store.
 
@@ -724,19 +723,19 @@ Feature-specific data such as products, cart items, and orders is maintained wit
 
 The application is designed to work across:
 
-* Desktop
-* Tablet
-* Mobile
+- Desktop
+- Tablet
+- Mobile
 
 The main layout provides:
 
-* Fixed application header
-* Responsive navigation
-* Mobile menu toggle
-* Responsive product cards
-* Responsive cart layout
-* Responsive order pages
-* Responsive dialogs
+- Fixed application header
+- Responsive navigation
+- Mobile menu toggle
+- Responsive product cards
+- Responsive cart layout
+- Responsive order pages
+- Responsive dialogs
 
 The frontend uses Vuetify components and responsive layout features.
 
@@ -780,27 +779,27 @@ API Request
 
 ## Frontend
 
-* Vue 3
-* TypeScript
-* Vuetify
-* Pinia
-* Vue Router
-* Vite
+- Vue 3
+- TypeScript
+- Vuetify
+- Pinia
+- Vue Router
+- Vite
 
 ## Backend
 
-* Node.js
-* Express.js
-* TypeScript
-* REST APIs
-* JWT
-* MySQL
+- Node.js
+- Express.js
+- TypeScript
+- REST APIs
+- JWT
+- MySQL
 
 ## Infrastructure
 
-* Docker
-* Docker Desktop
-* Amazon S3 image URLs
+- Docker
+- Docker Desktop
+- Amazon S3 image URLs
 
 ---
 
@@ -1024,23 +1023,23 @@ View Customer Order Details
 
 | Feature            | Customer | Admin |
 | ------------------ | :------: | :---: |
-| Registration       |    Yes   |   -   |
-| Login              |    Yes   |  Yes  |
-| JWT Authentication |    Yes   |  Yes  |
-| Route Protection   |    Yes   |  Yes  |
-| Dashboard          |    Yes   |  Yes  |
-| View Products      |    Yes   |  Yes  |
-| Product Search     |    Yes   |  Yes  |
-| Product Pagination |    Yes   |  Yes  |
+| Registration       |   Yes    |   -   |
+| Login              |   Yes    |  Yes  |
+| JWT Authentication |   Yes    |  Yes  |
+| Route Protection   |   Yes    |  Yes  |
+| Dashboard          |   Yes    |  Yes  |
+| View Products      |   Yes    |  Yes  |
+| Product Search     |   Yes    |  Yes  |
+| Product Pagination |   Yes    |  Yes  |
 | Add Product        |    No    |  Yes  |
 | Edit Product       |    No    |  Yes  |
-| Add to Cart        |    Yes   |   -   |
-| Remove from Cart   |    Yes   |   -   |
-| View Cart          |    Yes   |   -   |
-| Place Order        |    Yes   |   -   |
-| View Own Orders    |    Yes   |   -   |
+| Add to Cart        |   Yes    |   -   |
+| Remove from Cart   |   Yes    |   -   |
+| View Cart          |   Yes    |   -   |
+| Place Order        |   Yes    |   -   |
+| View Own Orders    |   Yes    |   -   |
 | View All Orders    |    No    |  Yes  |
-| Responsive UI      |    Yes   |  Yes  |
+| Responsive UI      |   Yes    |  Yes  |
 
 ---
 
@@ -1086,18 +1085,18 @@ The Shopping Cart application provides a complete end-to-end shopping workflow w
 
 The project demonstrates:
 
-* Modern Vue 3 development with TypeScript
-* Component-based frontend architecture
-* REST API integration
-* JWT authentication
-* Role-based authorization
-* API-level search and pagination
-* Product management
-* Shopping cart management
-* Order management
-* MySQL database integration
-* Responsive UI development
-* Layered backend architecture
-* Docker containerization
+- Modern Vue 3 development with TypeScript
+- Component-based frontend architecture
+- REST API integration
+- JWT authentication
+- Role-based authorization
+- API-level search and pagination
+- Product management
+- Shopping cart management
+- Order management
+- MySQL database integration
+- Responsive UI development
+- Layered backend architecture
+- Docker containerization
 
 The root repository provides the complete application, while the frontend and backend are maintained as separate projects with their own implementation details and documentation.
