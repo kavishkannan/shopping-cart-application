@@ -3,6 +3,10 @@
     <v-layout class="AppLayout">
       <!-- Header -->
       <v-app-bar color="primary" elevation="3" height="72" class="AppHeader">
+        <v-btn icon variant="text" class="MenuButton" @click="toggleDrawer">
+          <v-icon> mdi-menu </v-icon>
+        </v-btn>
+
         <div class="AppBrand">
           <img
             :src="ShoppingCartImage"
@@ -113,7 +117,7 @@
         </v-list>
       </v-navigation-drawer>
 
-      <!-- Page Content -->
+      <!-- Main Content -->
       <v-main class="MainBackground">
         <v-container fluid class="MainContent">
           <router-view />
@@ -125,18 +129,20 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+
 import { useDisplay } from "vuetify";
 import { useRouter } from "vue-router";
 
 import ShoppingCartImage from "../assets/Logo.png";
 import { useStore } from "../stores/store";
 
-const Router = useRouter();
 const Store = useStore();
 
-const { mobile: IsMobile } = useDisplay();
-
 const IsDrawerOpen = ref(true);
+const Router = useRouter();
+const { mdAndDown } = useDisplay();
+
+const IsMobile = mdAndDown;
 
 const toggleDrawer = (): void => {
   IsDrawerOpen.value = !IsDrawerOpen.value;
@@ -144,7 +150,6 @@ const toggleDrawer = (): void => {
 
 const handleLogout = (): void => {
   Store.clearAuth();
-
   Router.push("/login");
 };
 </script>
@@ -155,15 +160,22 @@ const handleLogout = (): void => {
   background: #f8fafc;
 }
 
+/* Header */
+
 .AppHeader {
   z-index: 1000;
+}
+
+.MenuButton {
+  flex-shrink: 0;
+  color: white !important;
 }
 
 .AppBrand {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-left: 16px;
+  margin-left: 4px;
 }
 
 .BrandImage {
@@ -182,9 +194,9 @@ const handleLogout = (): void => {
 
 .UserButton {
   color: white !important;
-  text-transform: none;
   font-size: 15px;
   font-weight: 500;
+  text-transform: none;
 }
 
 .UserName {
@@ -198,6 +210,8 @@ const handleLogout = (): void => {
   min-height: 72px;
 }
 
+/* Navigation */
+
 .NavigationDrawer {
   z-index: 900;
 }
@@ -210,7 +224,7 @@ const handleLogout = (): void => {
 
   color: #6b7280;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .NavigationList {
@@ -226,20 +240,25 @@ const handleLogout = (): void => {
   color: #1976d2;
 }
 
+/* Main Content */
+
 .MainBackground {
-  background: #f8fafc;
   height: 100vh;
   overflow: hidden;
+  background: #f8fafc;
 }
 
 .MainContent {
-  height: 100%;
+  width: 100%;
   max-width: 100%;
+  height: 100%;
   padding: 28px 32px;
 
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
+
+/* Tablet */
 
 @media (max-width: 960px) {
   .MainContent {
@@ -251,9 +270,21 @@ const handleLogout = (): void => {
   }
 }
 
+/* Mobile */
+
 @media (max-width: 600px) {
+  .AppHeader {
+    height: 64px !important;
+    padding: 0 8px;
+  }
+
+  .MenuButton {
+    width: 44px;
+    height: 44px;
+  }
+
   .AppBrand {
-    margin-left: 4px;
+    gap: 7px;
   }
 
   .BrandImage {

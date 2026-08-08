@@ -447,7 +447,7 @@ const handleSubmit = async (): Promise<void> => {
     IsOpen.value = false;
 
     resetForm();
-  } catch (Error) {
+  } catch (Error: any) {
     ErrorMessage.value =
       Error instanceof Error
         ? Error.message

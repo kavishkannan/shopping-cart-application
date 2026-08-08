@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-
+import axios, { AxiosError } from "axios";
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
 interface ApiErrorResponse {
   success?: boolean;
   message?: string;
@@ -53,7 +53,6 @@ class ApiService {
     );
   }
 
- 
   private handleError(error: unknown): never {
     if (axios.isAxiosError<ApiErrorResponse>(error)) {
       const message =
@@ -70,7 +69,6 @@ class ApiService {
 
     throw new Error("An unexpected error occurred.");
   }
-
 
   async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
     try {
@@ -96,7 +94,6 @@ class ApiService {
     }
   }
 
-
   async put<T>(
     url: string,
     data?: unknown,
@@ -110,7 +107,6 @@ class ApiService {
       this.handleError(error);
     }
   }
-
 
   async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
     try {
