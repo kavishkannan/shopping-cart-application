@@ -28,20 +28,35 @@
       </v-btn>
     </div>
 
-    <v-card class="SearchCard" elevation="1" rounded="xl">
-      <v-text-field
-        v-model="SearchText"
-        placeholder="Search products..."
-        prepend-inner-icon="mdi-magnify"
-        variant="solo"
-        flat
-        hide-details
-        clearable
-        density="comfortable"
-        :disabled="IsLoading"
-        @update:model-value="handleSearch"
-      />
-    </v-card>
+    <div class="SearchAndCart">
+      <v-card class="SearchCard" elevation="1" rounded="xl">
+        <v-text-field
+          v-model="SearchText"
+          placeholder="Search products..."
+          prepend-inner-icon="mdi-magnify"
+          variant="solo"
+          flat
+          hide-details
+          clearable
+          density="comfortable"
+          :disabled="IsLoading"
+          @update:model-value="handleSearch"
+        />
+      </v-card>
+
+      <div class="CartNavigation">
+        <v-btn
+          color="primary"
+          variant="tonal"
+          size="large"
+          rounded="lg"
+          prepend-icon="mdi-cart-outline"
+          to="/cart"
+        >
+          Go to Cart
+        </v-btn>
+      </div>
+    </div>
 
     <v-alert
       v-if="ErrorMessage"
@@ -591,7 +606,42 @@ onBeforeUnmount(() => {
   justify-content: center;
   margin-top: 35px;
 }
+.SearchAndCart {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
 
+.SearchCard {
+  flex: 1 1 auto;
+  width: auto !important;
+  min-width: 0;
+}
+
+.CartNavigation {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 600px) {
+  .SearchAndCart {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .SearchCard {
+    width: 100% !important;
+  }
+
+  .CartNavigation {
+    width: 100%;
+  }
+
+  .CartNavigation .v-btn {
+    width: 100%;
+  }
+}
 @media (max-width: 960px) {
   .PageHeader {
     align-items: flex-start;
