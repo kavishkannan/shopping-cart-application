@@ -26,12 +26,39 @@ const Routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: () => import("../views/dashboard/DashboardView.vue"),
+    path: "/",
+    component: () => import("../layouts/MainLayout.vue"),
     meta: {
       requiresAuth: true,
     },
+    children: [
+      {
+        path: "",
+        redirect: "/dashboard",
+      },
+      {
+        path: "dashboard",
+        name: "Dashboard",
+        component: () => import("../views/dashboard/DashboardView.vue"),
+      },
+      {
+        path: "products",
+        name: "Products",
+        component: () => import("../views/products/ProductView.vue"),
+      },
+      // {
+      //   path: 'cart',
+      //   name: 'Cart',
+      //   component: () =>
+      //     import('../views/cart/CartView.vue'),
+      // },
+      // {
+      //   path: 'orders',
+      //   name: 'Orders',
+      //   component: () =>
+      //     import('../views/orders/OrderView.vue'),
+      // },
+    ],
   },
 ];
 

@@ -4,18 +4,26 @@ import { STATUS_CODES } from "../constants/statusCodes";
 import { ApiResponse } from "../utils/apiResponse";
 
 class ProductController {
-  async getProducts(req: Request, res: Response, next: NextFunction) {
-    try {
-      const products = await ProductService.getProducts();
+  async getProducts(req: Request, res: Response) {
+    const userId = (req as any).user.id;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+    const search = String(req.query.search || "");
+    const Result = await ProductService.getProducts(
+      userId,
+      page,
+      limit,
+      search,
+    );
 
-      return res
-        .status(STATUS_CODES.OK)
-        .json(ApiResponse.success("Products fetched successfully", products));
-    } catch (error) {
-      next(error);
-    }
+    return res.status(STATUS_CODES.OK).json({
+      success: true,
+      statusCode: STATUS_CODES.OK,
+      message: "Products fetched successfully",
+      data: Result.products,
+      totalPages: Result.totalPages,
+    });
   }
-
   async getProductById(req: Request, res: Response, next: NextFunction) {
     try {
       const product = await ProductService.getProductById(

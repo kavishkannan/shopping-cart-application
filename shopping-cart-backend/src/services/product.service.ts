@@ -3,8 +3,25 @@ import { IProduct } from "../interfaces/product.interface";
 import { STATUS_CODES } from "../constants/statusCodes";
 
 class ProductService {
-  async getProducts() {
-    return await ProductRepository.findAll();
+  async getProducts(
+    userId: number,
+    page: number,
+    limit: number,
+    search: string,
+  ) {
+    const Products = await ProductRepository.findAll(
+      userId,
+      page,
+      limit,
+      search,
+    );
+    const TotalRecords = await ProductRepository.getProductCount(search);
+    const TotalPages = Math.ceil(TotalRecords / limit);
+
+    return {
+      products: Products,
+      totalPages: TotalPages,
+    };
   }
 
   async getProductById(id: number) {

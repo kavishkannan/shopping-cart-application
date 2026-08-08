@@ -69,7 +69,7 @@ class CartController {
   async placeOrder(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = (req as any).user.id;
-      
+
       await CartService.placeOrder(userId);
 
       return res
@@ -78,6 +78,26 @@ class CartController {
     } catch (error) {
       next(error);
     }
+  }
+
+  async removeItemByProduct(req: Request, res: Response) {
+    const userId = (req as any).user.id;
+    const productId = Number(req.params.productId);
+
+    if (!productId || productId <= 0) {
+      throw {
+        statusCode: STATUS_CODES.BAD_REQUEST,
+        message: "Invalid product ID",
+      };
+    }
+
+    await CartService.removeItemByProduct(userId, productId);
+
+    return res.status(STATUS_CODES.OK).json({
+      success: true,
+      statusCode: STATUS_CODES.OK,
+      message: "Product removed from cart",
+    });
   }
 }
 

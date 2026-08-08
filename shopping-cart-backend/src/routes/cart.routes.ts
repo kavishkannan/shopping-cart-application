@@ -26,5 +26,10 @@ router.put(
 router.delete("/items/:id", authMiddleware, CartController.removeItem);
 
 router.post("/place-order", authMiddleware, CartController.placeOrder);
+router.delete(
+  "/remove-cart/:productId",
+  authMiddleware,
+  CartController.removeItemByProduct,
+);
 
 export default router;

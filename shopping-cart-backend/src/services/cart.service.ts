@@ -131,8 +131,28 @@ class CartService {
     }
 
     await CartRepository.reduceStock(cart.id);
-
     await CartRepository.placeOrder(cart.id);
+  }
+
+  async removeItemByProduct(userId: number, productId: number) {
+    const cart = await CartRepository.findActiveCart(userId);
+
+    if (!cart) {
+      throw {
+        statusCode: STATUS_CODES.NOT_FOUND,
+        message: "Cart not found",
+      };
+    }
+    const cartItem = await CartRepository.findCartItem(cart.id, productId);
+
+    if (!cartItem) {
+      throw {
+        statusCode: STATUS_CODES.NOT_FOUND,
+        message: "Product is not in the cart",
+      };
+    }
+
+    await CartRepository.removeItemByProduct(userId, productId);
   }
 }
 

@@ -181,6 +181,20 @@ class CartRepository {
       [cartId],
     );
   }
+
+  async removeItemByProduct(userId: number, productId: number) {
+    await pool.execute(
+      `DELETE ci
+      FROM cart_items ci
+      INNER JOIN carts c
+        ON c.id = ci.cart_id
+      WHERE c.user_id = ?
+        AND c.status = 'ACTIVE'
+        AND ci.product_id = ?
+    `,
+      [userId, productId],
+    );
+  }
 }
 
 export default new CartRepository();
