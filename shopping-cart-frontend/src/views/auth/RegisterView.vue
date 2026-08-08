@@ -1,5 +1,7 @@
 <template>
-  <div>Register</div>
+  <Register />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Register from '../../components/register/Register.vue';
+</script>
