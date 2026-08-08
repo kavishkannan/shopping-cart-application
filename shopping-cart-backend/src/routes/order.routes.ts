@@ -9,8 +9,8 @@ router.get("/", authMiddleware, OrderController.getOrders);
 
 router.get(
   "/all",
-  roleMiddleware("ADMIN"),
   authMiddleware,
+  roleMiddleware("ADMIN"),
   OrderController.getAllOrders,
 );
 

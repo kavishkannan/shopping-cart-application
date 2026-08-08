@@ -46,6 +46,7 @@
 
       <div class="CartNavigation">
         <v-btn
+          v-if="Store.isCustomer"
           color="primary"
           variant="tonal"
           size="large"

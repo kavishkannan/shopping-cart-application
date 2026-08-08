@@ -72,7 +72,11 @@
             <div class="CardTitle">Orders</div>
 
             <div class="CardDescription">
-              View your previous orders and order details.
+              {{
+                Store.isCustomer
+                  ? "View your previous orders and order details."
+                  : "View products ordered by all customers."
+              }}
             </div>
           </div>
 
