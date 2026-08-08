@@ -8,12 +8,28 @@ class OrderController {
   async getOrders(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = (req as any).user.id;
-      
-      const orders = await OrderService.getOrders(userId);
 
-      return res
-        .status(STATUS_CODES.OK)
-        .json(ApiResponse.success("Orders fetched successfully", orders));
+      const page = Math.max(Number(req.query.page) || 1, 1);
+      const limit = 10;
+      const search = String(req.query.search || "");
+      const Result = await OrderService.getUserOrders(
+        userId,
+        page,
+        limit,
+        search,
+      );
+
+      return res.status(STATUS_CODES.OK).json({
+        success: true,
+        statusCode: STATUS_CODES.OK,
+        data: Result.rows,
+        pagination: {
+          page,
+          limit,
+          total: Result.total,
+          totalPages: Math.ceil(Result.total / limit),
+        },
+      });
     } catch (error) {
       next(error);
     }
@@ -21,10 +37,21 @@ class OrderController {
 
   async getAllOrders(req: Request, res: Response, next: NextFunction) {
     try {
-      const orders = await OrderService.getAllOrders();
-      return res
-        .status(STATUS_CODES.OK)
-        .json(ApiResponse.success("All orders fetched successfully", orders));
+      const page = Math.max(Number(req.query.page) || 1, 1);
+      const limit = 10;
+      const search = String(req.query.search || "");
+      const Result = await OrderService.getAllOrders(page, limit, search);
+      return res.status(STATUS_CODES.OK).json({
+        success: true,
+        statusCode: STATUS_CODES.OK,
+        data: Result.rows,
+        pagination: {
+          page,
+          limit,
+          total: Result.total,
+          totalPages: Math.ceil(Result.total / limit),
+        },
+      });
     } catch (error) {
       next(error);
     }

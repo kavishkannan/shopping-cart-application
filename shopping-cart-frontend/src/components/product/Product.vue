@@ -41,6 +41,7 @@
           density="comfortable"
           :disabled="IsLoading"
           @update:model-value="handleSearch"
+          @click:clear="handleClearSearch"
         />
       </v-card>
 
@@ -316,7 +317,7 @@ const handleSearch = (): void => {
 
   SearchTimer = setTimeout(() => {
     getProducts();
-  }, 500);
+  }, 1000);
 };
 
 const handlePageChange = (Page: number): void => {
@@ -325,6 +326,17 @@ const handlePageChange = (Page: number): void => {
   getProducts();
 };
 
+const handleClearSearch = (): void => {
+  if (SearchTimer) {
+    clearTimeout(SearchTimer);
+    SearchTimer = null;
+  }
+
+  SearchText.value = "";
+  CurrentPage.value = 1;
+
+  getProducts();
+};
 const handleCartAction = async (ProductItem: Product): Promise<void> => {
   IsAddingToCart.value = ProductItem.id;
 

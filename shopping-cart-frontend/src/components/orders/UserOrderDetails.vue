@@ -2,9 +2,15 @@
   <div class="OrdersPage">
     <div class="PageHeader">
       <div>
-        <h1>My Orders</h1>
+        <div class="PageTitle">
+          <v-icon color="primary" size="32" class="mr-2">
+            mdi-receipt-text-outline
+          </v-icon>
 
-        <p>View the products you have ordered.</p>
+          <h1>My Orders</h1>
+        </div>
+
+        <p class="PageSubtitle">View the products you have ordered.</p>
       </div>
     </div>
 
@@ -18,60 +24,123 @@
       {{ ErrorMessage }}
     </v-alert>
 
-    <v-card rounded="xl" elevation="2" class="OrdersCard">
-      <div v-if="IsLoading" class="LoadingContainer">
-        <v-progress-circular indeterminate color="primary" />
+    <v-card class="SearchCard" elevation="1" rounded="xl">
+      <v-text-field
+        v-model="SearchText"
+        placeholder="Search your orders..."
+        prepend-inner-icon="mdi-magnify"
+        variant="solo"
+        flat
+        hide-details
+        clearable
+        density="comfortable"
+        :disabled="IsLoading"
+        @update:model-value="handleSearch"
+        @click:clear="handleClearSearch"
+      />
+    </v-card>
 
-        <span> Loading orders... </span>
+    <v-card class="OrdersCard" elevation="2" rounded="xl">
+      <div v-if="IsLoading" class="LoadingContainer">
+        <v-progress-circular
+          indeterminate
+          color="primary"
+          size="48"
+          width="4"
+        />
+
+        <span> Loading your orders... </span>
       </div>
 
       <div v-else-if="Orders.length === 0" class="EmptyState">
-        <v-icon size="60" color="primary"> mdi-receipt-text-outline </v-icon>
+        <div class="EmptyIcon">
+          <v-icon size="60" color="primary"> mdi-receipt-text-outline </v-icon>
+        </div>
 
-        <h2>No orders yet</h2>
+        <h2>No orders found</h2>
 
         <p>Your ordered products will appear here.</p>
 
-        <v-btn color="primary" to="/products" rounded="lg">
+        <v-btn
+          color="primary"
+          rounded="lg"
+          to="/products"
+          prepend-icon="mdi-package-variant"
+        >
           Browse Products
         </v-btn>
       </div>
 
-      <v-table v-else class="OrdersTable">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Unit Price</th>
-            <th>Total Price</th>
-            <th>Order Date</th>
-          </tr>
-        </thead>
+      <template v-else>
+        <div class="TableWrapper">
+          <v-table class="OrdersTable">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
+                <th>Order Date</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          <tr
-            v-for="Order in Orders"
-            :key="`${Order.product_id}-${Order.order_date}`"
-          >
-            <td class="ProductName">
-              {{ Order.product_name }}
-            </td>
+            <tbody>
+              <tr
+                v-for="Order in Orders"
+                :key="`${Order.product_id}-${Order.order_date}`"
+              >
+                <td class="ProductName">
+                  {{ Order.product_name }}
+                </td>
 
-            <td>
-              {{ Order.quantity }}
-            </td>
+                <td>
+                  {{ Order.quantity }}
+                </td>
 
-            <td>₹{{ formatPrice(Order.unit_price) }}</td>
+                <td>₹{{ formatPrice(Order.unit_price) }}</td>
 
-            <td class="TotalPrice">₹{{ formatPrice(Order.total_price) }}</td>
+                <td class="TotalPrice">
+                  ₹{{ formatPrice(Order.total_price) }}
+                </td>
 
-            <td>
-              {{ formatDate(Order.order_date) }}
-            </td>
-          </tr>
-        </tbody>
-      </v-table>
+                <td>
+                  {{ formatDate(Order.order_date) }}
+                </td>
+              </tr>
+            </tbody>
+          </v-table>
+        </div>
+
+        <div v-if="TotalPages > 1" class="PaginationContainer">
+          <div class="RecordCount">
+            {{ TotalRecords }} order{{ TotalRecords === 1 ? "" : "s" }}
+          </div>
+
+          <v-pagination
+            v-model="CurrentPage"
+            :length="TotalPages"
+            :total-visible="6"
+            rounded="circle"
+            :disabled="IsLoading"
+            @update:model-value="handlePageChange"
+          />
+        </div>
+      </template>
     </v-card>
+
+    <v-snackbar
+      v-model="ShowSnackbar"
+      :color="SnackbarColor"
+      :timeout="3000"
+      location="bottom right"
+      rounded="lg"
+    >
+      {{ SnackbarMessage }}
+
+      <template #actions>
+        <v-btn variant="text" @click="ShowSnackbar = false"> Close </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -89,33 +158,99 @@ interface Order {
   order_date: string;
 }
 
+interface Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
 interface OrderResponse {
   success: boolean;
   statusCode: number;
   data: Order[];
+  pagination: Pagination;
 }
 
 const Orders = ref<Order[]>([]);
+
+const SearchText = ref("");
+
+const CurrentPage = ref(1);
+
+const TotalPages = ref(1);
+
+const TotalRecords = ref(0);
 
 const IsLoading = ref(false);
 
 const ErrorMessage = ref("");
 
-const getOrders = async (): Promise<void> => {
+const ShowSnackbar = ref(false);
+
+const SnackbarMessage = ref("");
+
+const SnackbarColor = ref("success");
+
+let SearchTimer: ReturnType<typeof setTimeout> | null = null;
+
+const getOrders = async (Page: number = CurrentPage.value): Promise<void> => {
   IsLoading.value = true;
 
   ErrorMessage.value = "";
 
   try {
-    const Response = await ApiService.get<OrderResponse>("/orders");
+    const Response = await ApiService.get<OrderResponse>(
+      `/orders?page=${Page}&limit=10&search=${encodeURIComponent(
+        SearchText.value.trim(),
+      )}`,
+    );
 
     Orders.value = Response.data || [];
+
+    CurrentPage.value = Response.pagination?.page || Page;
+
+    TotalPages.value = Response.pagination?.totalPages || 1;
+
+    TotalRecords.value = Response.pagination?.total || 0;
   } catch (Error: any) {
     ErrorMessage.value =
       Error instanceof Error ? Error.message : "Unable to load orders.";
+
+    Orders.value = [];
   } finally {
     IsLoading.value = false;
   }
+};
+
+const handleSearch = (): void => {
+  if (SearchTimer) {
+    clearTimeout(SearchTimer);
+  }
+
+  SearchTimer = setTimeout(() => {
+    CurrentPage.value = 1;
+
+    getOrders(1);
+  }, 1000);
+};
+
+const handlePageChange = (Page: number): void => {
+  CurrentPage.value = Page;
+
+  getOrders(Page);
+};
+
+const handleClearSearch = (): void => {
+  if (SearchTimer) {
+    clearTimeout(SearchTimer);
+    SearchTimer = null;
+  }
+
+  SearchText.value = "";
+  CurrentPage.value = 1;
+
+  getOrders(1);
 };
 
 const formatPrice = (Price: number): string => {
@@ -123,6 +258,10 @@ const formatPrice = (Price: number): string => {
 };
 
 const formatDate = (DateValue: string): string => {
+  if (!DateValue) {
+    return "-";
+  }
+
   return new Date(DateValue).toLocaleDateString("en-IN", {
     day: "2-digit",
     month: "short",
@@ -138,61 +277,141 @@ onMounted(() => {
 <style scoped>
 .OrdersPage {
   width: 100%;
+  padding-bottom: 40px;
 }
 
 .PageHeader {
   margin-bottom: 24px;
 }
 
-.PageHeader h1 {
+.PageTitle {
+  display: flex;
+  align-items: center;
+}
+
+.PageTitle h1 {
   margin: 0;
   color: #111827;
   font-size: 32px;
   font-weight: 700;
 }
 
-.PageHeader p {
-  margin-top: 8px;
+.PageSubtitle {
+  margin: 8px 0 0 38px;
   color: #6b7280;
+  font-size: 15px;
+}
+
+.SearchCard {
+  margin-bottom: 20px;
+  overflow: hidden;
 }
 
 .OrdersCard {
   overflow: hidden;
+  border: 1px solid #e5e7eb;
 }
 
-.LoadingContainer,
-.EmptyState {
-  min-height: 350px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  gap: 14px;
-
-  text-align: center;
+.TableWrapper {
+  width: 100%;
+  overflow-x: auto;
 }
 
-.EmptyState h2 {
-  margin: 0;
-}
-
-.EmptyState p {
-  margin: 0 0 10px;
-  color: #6b7280;
+.OrdersTable {
+  width: 100%;
+  min-width: 700px;
 }
 
 .OrdersTable th {
+  height: 58px;
+  color: #374151;
   font-weight: 600;
+  white-space: nowrap;
+  background: #f8fafc;
+}
+
+.OrdersTable td {
+  height: 64px;
   white-space: nowrap;
 }
 
 .ProductName {
+  color: #111827;
   font-weight: 600;
 }
 
 .TotalPrice {
-  font-weight: 600;
+  color: #111827;
+  font-weight: 700;
+}
+
+.PaginationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 22px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.RecordCount {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.LoadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  gap: 16px;
+  color: #6b7280;
+}
+
+.EmptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 40px;
+  text-align: center;
+}
+
+.EmptyIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #eaf3ff;
+}
+
+.EmptyState h2 {
+  margin: 0;
+  color: #111827;
+}
+
+.EmptyState p {
+  margin: 8px 0 24px;
+  color: #6b7280;
+}
+
+@media (max-width: 600px) {
+  .PageTitle h1 {
+    font-size: 28px;
+  }
+
+  .PageSubtitle {
+    margin-left: 0;
+  }
+
+  .PaginationContainer {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>

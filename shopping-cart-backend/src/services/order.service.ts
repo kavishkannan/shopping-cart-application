@@ -1,16 +1,17 @@
 import OrderRepository from "../repositories/order.repository";
 
 class OrderService {
-  async getOrders(userId: number) {
-    const orders = await OrderRepository.getOrdersByUser(userId);
-
-    return orders;
+  async getUserOrders(
+    userId: number,
+    page: number,
+    limit: number,
+    search: string,
+  ) {
+    return await OrderRepository.findUserOrders(userId, page, limit, search);
   }
 
-  async getAllOrders() {
-    const orders = await OrderRepository.getAllOrders();
-
-    return orders;
+  async getAllOrders(page: number, limit: number, search: string) {
+    return await OrderRepository.findAllOrders(page, limit, search);
   }
 }
 
